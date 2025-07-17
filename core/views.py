@@ -8,7 +8,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
-from django.utils.timezone import now, make_aware, localtime
+from django.utils.timezone import now, make_aware, localtime, localdate
 from django.utils.crypto import get_random_string
 
 from .forms import SignUpForm, CheckoutForm
@@ -209,9 +209,11 @@ def checkout_view(request, stall_id):
             else:
                 today = now().date()
                 pickup_dt = datetime.combine(today, datetime.strptime(pickup_time_str, "%H:%M").time())
+            today = localdate()
+            existing_orders = Order.objects.filter(stall=stall, created_at__date=today)
             stall_index = list(Stall.objects.order_by('id').values_list('id', flat=True)).index(stall.id) + 1
-            count_today = Order.objects.filter(stall=stall, created_at__date=now().date()).count() + 1
-            transaction_id = f"S{stall_index:02d}{count_today:03d}"
+            transaction_number = existing_orders.count() + 1
+            transaction_id = f"S{stall_index:02d}{transaction_number:03d}"
 
             headers = {
                 "Authorization": f"Basic {settings.PAYMONGO_SECRET_KEY}",
