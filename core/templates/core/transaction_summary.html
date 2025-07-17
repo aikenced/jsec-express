@@ -1,0 +1,48 @@
+{% if messages %}
+  {% for message in messages %}
+    <div style="background-color: #d4edda; padding: 10px; border-radius: 5px;">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<h1>🎉 Payment Successful!</h1>
+<p>Thank you for ordering from {{ order.stall.name }}.</p>
+
+<p><strong>Transaction ID:</strong> {{ order.transaction_id }}</p>
+<p><strong>Stall:</strong> {{ order.stall.name }}</p>
+
+{% if voucher %}
+  <p><strong>Voucher Applied:</strong> {{ voucher.code }} (₱{{ voucher.discount_amount }} off)</p>
+{% endif %}
+
+<p><strong>Total Cost:</strong> ₱{{ order.total_cost }}</p>
+<p><strong>Pickup Time:</strong> {{ order.pickup_time|date:"M d, Y H:i" }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+
+{% if order.status == "Pending" %}
+  <p><strong>Estimated Preparation Time:</strong> {{ estimated_minutes }} mins</p>
+{% endif %}
+
+<h3>Items:</h3>
+<ul>
+  {% for item in items %}
+    <li>{{ item.quantity }} × {{ item.item.name }} — ₱{{ item.item.price }}</li>
+  {% empty %}
+    <li>No items found.</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Payment Status:</strong> Paid via PayMongo</p>
+
+<a href="{% url 'download_receipt' order.transaction_id %}">Download Receipt (PDF)</a>  
+<br><br>
+<a href="{% url 'home' %}">Return to Homepage</a>
+
+{% if user.is_staff %}
+  <form method="post" action="{% url 'mark_order_ready' order.transaction_id %}">
+    {% csrf_token %}
+    <button type="submit">Mark Order as Ready</button>
+  </form>
+{% endif %}
+

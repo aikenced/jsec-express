@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}JSEC Express Admin{% endblock %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" href="{% static 'css/admin_custom.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <div class="admin-header">
+    <img src="{% static 'images/jsec_logo.jpeg' %}" alt="JSEC Logo">
+    <h1>JSEC Express Admin</h1>
+  </div>
+{% endblock %}
+
+{% block nav-global %}
+  <div class="admin-nav">
+    <div>
+      <a href="{% url 'jsecadmin:index' %}">Dashboard</a>
+      <a href="{% url 'home' %}">Back to Site</a>
+    </div>
+    {% if user.is_authenticated %}
+      <div>
+        <span>Hi, {{ user.get_username }}</span>
+        <a class="logout" href="{% url 'admin:logout' %}">Logout</a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

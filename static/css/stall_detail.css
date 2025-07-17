@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+}
+
+.header {
+  background-color: #204b84;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stall-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stall-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.jsec-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.menu-section {
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.menu-category {
+  background-color: #e8e8e8;
+  padding: 25px;
+  border-radius: 30px;
+}
+
+.menu-category h3 {
+  font-size: 1.5rem;
+  color: #204b84;
+  margin-bottom: 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #1d3557;
+}
+
+.menu-item .item-name {
+  flex: 1;
+}
+
+.menu-item .item-price {
+  width: 100px;
+  text-align: right;
+}
+
+.menu-item form {
+  margin-left: 15px;
+}
+
+.menu-item button {
+  background-color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #204b84;
+  cursor: pointer;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 60px;
+}
+
+.back-btn, .cart-btn {
+  background-color: #5c87c4;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.popup-message-container {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.popup-message {
+  background-color:white;
+  color: #204b84;
+  padding: 12px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  font-weight: 500;
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}

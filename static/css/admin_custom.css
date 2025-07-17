@@ -1,0 +1,58 @@
+body {
+  background-color: #f9f9fb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #2b2d42;
+}
+
+a {
+  color: #1d3557;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.admin-header img {
+  height: 40px;
+  border-radius: 0.5rem;
+}
+
+.admin-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.admin-nav a {
+  margin-right: 1.5rem;
+  color: #1d3557;
+}
+
+.admin-nav a.logout {
+  color: #e63946;
+}

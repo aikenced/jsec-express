@@ -1,0 +1,12 @@
+<h2>You’ve been blacklisted</h2>
+<p>You must settle the following unpaid orders before you can order again:</p>
+
+<ul>
+  {% for order in orders %}
+    <li>
+      Order {{ order.transaction_id }} — ₱{{ order.total_cost }} — {{ order.status }}
+    </li>
+  {% endfor %}
+</ul>
+
+<p>Please contact stall staff or the admin to resolve this.</p>

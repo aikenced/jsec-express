@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stall Admin Login - JSEC Express</title>
+  <link rel="stylesheet" href="{% static 'css/admin_login.css' %}?v=2.3">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <form method="post" action="{% url 'admin:login' %}" class="login-form">
+        {% csrf_token %}
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+
+        <label for="{{ form.password.id_for_label }}">Password:</label>
+        {{ form.password }}
+
+        {% if form.errors %}
+          <p class="error">Invalid student ID or password.</p>
+        {% endif %}
+
+        <input type="hidden" name="next" value="{{ next|default:'/admin/' }}">
+
+        <button type="submit">Login</button>
+      </form>
+
+      <div class="logo-box">
+        <img src="{% static 'images/jsec_logo.jpeg' %}" alt="Logo" class="logo">
+        <h1>JSEC Express</h1>
+        <p>Cravings and Convenience</p>
+      </div>
+    </div>
+
+    <div class="admin-link">
+      Not an Admin? <a href="{% url 'login' %}">Student Log-in</a>
+    </div>
+  </div>
+</body>
+</html>

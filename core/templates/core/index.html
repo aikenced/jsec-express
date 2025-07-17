@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}JSEC Express Admin{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard-container">
+  <h1 class="welcome-title">Welcome to JSEC Admin</h1>
+  <p class="subtitle">Manage stalls, items, orders, and more.</p>
+
+  <div class="model-grid">
+    {% for app in app_list %}
+      {% for model in app.models %}
+        {% if model.admin_url %}
+        <a href="{{ model.admin_url }}" class="model-link">
+          <div class="model-card">
+            <h3>{{ model.name }}</h3>
+            <p>View and manage {{ model.name }}.</p>
+          </div>
+        </a>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - {{ stall.name }}</title>
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+</head>
+<body>
+  <div class="header">
+    <h2>Checkout - {{ stall.name }}</h2>
+    <h1>JSEC Express</h1>
+    <img src="{% static 'images/jsec_logo.jpeg' %}" class="logo" alt="Logo">
+  </div>
+
+  <form method="post" class="checkout-container">
+    {% csrf_token %}
+    
+    <div class="pickup-section">
+      <label for="{{ form.pickup_time.id_for_label }}">Pickup Time:</label>
+      {{ form.pickup_time }}
+    </div>
+
+    <div class="summary-card">
+      <h3>Order Summary</h3>
+      <ul class="item-list">
+        {% for item in cart_items %}
+          <li>{{ item.item.name }} × {{ item.quantity }}<span>₱{{ item.subtotal }}</span></li>
+        {% endfor %}
+
+        {% if discount > 0 %}
+          <li>Voucher<span>-₱{{ discount }}</span></li>
+        {% endif %}
+
+      </ul>
+
+      <div class="total-line">
+        <span>Total:</span>
+        <span class="total-amount">₱{{ total }}</span>
+      </div>
+    </div>
+
+    <div class="checkout-buttons">
+      <button type="submit" class="paymongo-btn">Proceed to PayMongo</button>
+      <a href="{% url 'view_cart' %}" class="back-btn">← Back to Cart</a>
+    </div>
+  </form>
+</body>
+</html>

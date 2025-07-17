@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order History - JSEC Express</title>
+  <link rel="stylesheet" href="{% static 'css/order_history.css' %}">
+</head>
+<div class="back-button-wrapper">
+  <a href="{% url 'home' %}" class="back-button">← Back to Home</a>
+</div>
+<body>
+  <div class="header">
+    <h2>Order History</h2>
+    <h1>JSEC Express</h1>
+    <img src="{% static 'images/jsec_logo.jpeg' %}" alt="Logo" class="logo">
+  </div>
+
+  <div class="order-list">
+    {% for order in orders %}
+    <div class="order-card">
+      <div class="left">{{ order.stall.name }}</div>
+      <div class="right">
+        {{ order.created_at|date:"M d, Y H:i" }} – ₱{{ order.total_cost }} – {{ order.status }}
+      </div>
+    </div>
+    {% empty %}
+    <p>No orders yet.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

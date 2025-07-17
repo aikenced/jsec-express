@@ -1,0 +1,23 @@
+<h1>My Orders</h1>
+
+{% if orders %}
+  <ul>
+    {% for order in orders %}
+      <li>
+        <strong>{{ order.transaction_id }}</strong> -
+        {{ order.stall.name }} -
+        {% if order.voucher %}
+           <p><strong>Voucher Used:</strong> {{ order.voucher.code }} (₱{{ order.voucher.discount_amount }} off)</p>
+        {% endif %} - 
+        ₱{{ order.total_cost }} -
+        {{ order.pickup_time|date:"M d, H:i" }} -
+        <em>{{ order.status }}</em>
+        <a href="{% url 'transaction_summary' order.transaction_id %}">View</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You have no orders yet.</p>
+{% endif %}
+
+<a href="{% url 'home' %}">← Back to Home</a>

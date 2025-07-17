@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ stall.name }} - Menu</title>
+  <link rel="stylesheet" href="{% static 'css/stall_detail.css' %}?v=2.0">
+</head>
+<body>
+
+  <div class="header">
+    <div class="stall-info">
+      <img src="{% static 'stall_logos/' %}{{ stall.logo_filename }}" alt="{{ stall.name }} Logo" class="stall-logo">
+      <div>
+        <h2>{{ stall.name }}</h2>
+        <p>Average Time: {{ stall.average_lead_time }} mins</p>
+      </div>
+    </div>
+    <div class="branding">
+      <h1>JSEC Express</h1>
+      <img src="{% static 'images/jsec_logo.jpeg' %}" class="jsec-logo" alt="JSEC Logo">
+    </div>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-category">
+      <h3>Food</h3>
+      {% for item in food_items %}
+        <div class="menu-item">
+          <span class="item-name">• {{ item.name }}</span>
+          <span class="item-price">₱{{ item.price }}</span>
+          <form method="post" action="{% url 'add_to_cart' item.id %}">
+            {% csrf_token %}
+            <button type="submit">Add to Cart</button>
+          </form>
+        </div>
+      {% empty %}
+        <p>No food items available.</p>
+      {% endfor %}
+    </div>
+
+    <div class="menu-category">
+      <h3>Beverage</h3>
+      {% for item in beverage_items %}
+        <div class="menu-item">
+          <span class="item-name">• {{ item.name }}</span>
+          <span class="item-price">₱{{ item.price }}</span>
+          <form method="post" action="{% url 'add_to_cart' item.id %}">
+            {% csrf_token %}
+            <button type="submit">Add to Cart</button>
+          </form>
+        </div>
+      {% empty %}
+        <p>No beverages available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <a href="{% url 'home' %}" class="back-btn">← Back to Home</a>
+    <a href="{% url 'view_cart' %}" class="cart-btn">Proceed to Cart →</a>
+  </div>
+
+  {% if messages %}
+    <div class="popup-message-container">
+      {% for message in messages %}
+        <div class="popup-message">{{ message }}</div>
+      {% endfor %}
+    </div>
+    <script>
+      setTimeout(() => {
+        const popup = document.querySelector('.popup-message-container');
+        if (popup) popup.style.display = 'none';
+      }, 5000);
+    </script>
+  {% endif %}
+
+</body>
+</html>

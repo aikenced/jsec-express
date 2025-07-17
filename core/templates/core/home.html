@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSEC Express</title>
+    <link rel="icon" href="{% static 'images/jsec_logo.jpeg' %}" type="image/jpeg">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=2.3">
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+            <img src="{% static 'images/jsec_logo.jpeg' %}" alt="JSEC Logo" class="jsec-logo">
+            <h1>Welcome, {{ user.full_name }}</h1>
+            <p>Student ID: {{ user.student_id }}</p>
+        </div>
+        <div class="brand">
+            <h1>JSEC Express</h1>
+        </div>
+        <div class="nav-links">
+            <div class="nav-actions"><
+                <a href="{% url 'view_cart' %}">Cart</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+ <a href="{% url 'order_history' %}" class="order-history-button">Order History</a>
+
+{% if pending_orders %}
+  <div class="pending-orders-section">
+    <h2>Your Pending Orders</h2>
+    <div class="pending-orders-grid">
+      {% for order in pending_orders %}
+        <div class="pending-order-card">
+          <p><strong>Transaction ID:</strong> {{ order.transaction_id }}</p>
+          <p><strong>Stall:</strong> {{ order.stall.name }}</p>
+          <p><strong>Pickup Time:</strong> {{ order.pickup_time|date:"M d, Y H:i" }}</p>
+          <p><strong>Total:</strong> ₱{{ order.total_cost }}</p>
+          <p class="status">Status: Pending</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+
+    <div class="stall-section">
+        <h2>Stalls</h2>
+        <div class="stall-grid">
+            {% for stall in stalls %}
+                <div class="stall-card">
+                    {% if stall.logo_filename %}
+                        <img src="{% static 'stall_logos/' %}{{ stall.logo_filename }}" alt="{{ stall.name }} Logo">
+                    {% else %}
+                        <p><em>No logo available</em></p>
+                    {% endif %}
+                    <h3>{{ stall.name }}</h3>
+                    <p>Lead time: {{ stall.average_lead_time }} mins</p>
+                    <a href="{% url 'stall_detail' stall.id %}">View Menu</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

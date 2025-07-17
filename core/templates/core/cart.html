@@ -1,0 +1,64 @@
+{% load static %}
+{% load cart_extras %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart - JSEC Express</title>
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+<body>
+  <div class="header">
+    <h2>Your Cart</h2>
+    <h1>JSEC Express</h1>
+    <img src="{% static 'images/jsec_logo.jpeg' %}" class="logo" alt="Logo">
+  </div>
+
+  {% if grouped_cart %}
+    {% for stall, items in grouped_cart.items %}
+      <div class="stall-section">
+        <h3>{{ stall.name }}</h3>
+        <div class="cart-card">
+          {% for item in items %}
+            <div class="cart-item">
+              <div class="item-info">
+                {{ item.item.name }} – ₱{{ item.item.price }} × {{ item.quantity }} = ₱{{ item.subtotal }}
+              </div>
+              <form method="post" action="{% url 'update_quantity' item.id %}" class="quantity-controls">
+                {% csrf_token %}
+                <button type="submit" name="action" value="decrease">-</button>
+                <button type="submit" name="action" value="increase">+</button>
+                <button type="submit" name="action" value="remove" class="remove-btn">Remove</button>
+              </form>
+            </div>
+          {% endfor %}
+
+          <div class="cart-total">
+            Total: ₱{{ total_per_stall|dict_key:stall }}
+          </div>
+
+          {% if stall.id %}
+            <form method="get" action="{% url 'checkout' stall.id %}" class="checkout-form">
+              <input type="text" name="voucher" placeholder="Enter Voucher Code">
+              <button type="submit">Proceed to Checkout</button>
+            </form>
+          {% else %}
+            <p class="error">Unable to proceed to checkout: Stall ID is missing.</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-cart">
+      <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart" class="empty-cart-img">
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven’t added anything yet.</p>
+    </div>
+
+  {% endif %}
+
+  <div class="back-wrapper">
+    <a href="{% url 'home' %}" class="back-btn">← Back to Home</a>
+  </div>
+</body>
+</html>
