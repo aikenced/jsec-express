@@ -1,12 +1,30 @@
-<h2>You’ve been blacklisted</h2>
-<p>You must settle the following unpaid orders before you can order again:</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blacklisted Notice</title>
+  <link rel="stylesheet" href="{% static 'css/blacklisted.css' %}">
+</head>
+<body>
 
-<ul>
-  {% for order in orders %}
-    <li>
-      Order {{ order.transaction_id }} — ₱{{ order.total_cost }} — {{ order.status }}
-    </li>
-  {% endfor %}
-</ul>
+  <div class="card warning-card">
+    <h2 class="card-title">You’ve been blacklisted</h2>
 
-<p>Please contact stall staff or the admin to resolve this.</p>
+    <p class="card-text">
+      You must settle the following unpaid orders before you can order again:
+    </p>
+
+    <ul class="order-list">
+      {% for order in orders %}
+        <li>Order {{ order.transaction_id }} — ₱{{ order.total_cost }} — {{ order.status }}</li>
+      {% endfor %}
+    </ul>
+
+    <p class="card-text">
+      Please contact stall staff or the admin to resolve this.
+    </p>
+  </div>
+
+</body>
+</html>
